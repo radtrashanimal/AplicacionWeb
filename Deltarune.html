@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deltarune | The Prophecy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      background: #090b16;
+      --ink: #f4f1e8;
+      --muted: #b7b9c8;
+      --violet: #8d7de0;
+      --violet-dark: #252044;
+      --panel: rgba(12, 13, 29, 0.86);
+      --line: rgba(216, 220, 237, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: #090b16;
+      font-family: 'VT323', monospace;
+      font-size: 1.25rem;
+    }
+
+    .deltarune-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image:
+        linear-gradient(rgba(9, 11, 22, 0.45), rgba(9, 11, 22, 0.65)),
+        url("IMAGE%20DEPTH.gif");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .deltarune-title {
+      margin: 0;
+      color: #ffffff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(2rem, 7vw, 5.5rem);
+      letter-spacing: 0.08em;
+      text-shadow: 4px 4px 0 #000000, 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .deltarune-subtitle {
+      margin: 1.5rem 0 0;
+      color: #d8dced;
+      font-family: 'VT323', monospace;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      letter-spacing: 0.22em;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      color: var(--muted);
+      font-size: 1.35rem;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      transform: translateX(-50%);
+    }
+
+    .scroll-cue::after {
+      content: '↓';
+      display: block;
+      color: var(--violet);
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .deltarune-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-top: 1px solid rgba(216, 220, 237, 0.2);
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 11, 22, 0.9);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(8px);
+    }
+
+    .deltarune-nav ul {
+      width: min(1150px, 100%);
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      list-style: none;
+    }
+
+    .deltarune-nav a {
+      display: block;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .deltarune-nav a:hover,
+    .deltarune-nav a:focus-visible {
+      border-color: var(--violet);
+      background: var(--violet-dark);
+      color: #ffffff;
+      outline: none;
+    }
+
+    .story-section {
+      padding: 7rem clamp(1.25rem, 6vw, 7rem);
+      background: #0b0d1b;
+    }
+
+    .story-intro,
+    .archive-header,
+    .archive-page {
+      width: min(1150px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--violet);
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 #000000, 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin: 0;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.3rem, 3vw, 2.3rem);
+      line-height: 1.6;
+      text-shadow: 4px 4px 0 #000000, 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .story-copy {
+      max-width: 700px;
+      margin: 1.75rem 0 0;
+      color: var(--muted);
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    .panel-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3.5rem;
+    }
+
+    .chapter-panel {
+      min-height: 210px;
+      overflow: hidden;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, #1a1c37, #0d0f20);
+      color: #777b9e;
+      text-align: center;
+      box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.16);
+    }
+
+    .chapter-panel img {
+      width: 100%;
+      height: 100%;
+      min-height: 210px;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .chapter-panel:hover img {
+      transform: scale(1.08);
+      filter: brightness(1.12);
+    }
+
+    .chapter-panel span {
+      display: block;
+      color: var(--violet);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      line-height: 1.8;
+    }
+
+    .archive-section {
+      padding: 6rem clamp(1.25rem, 6vw, 7rem) 8rem;
+      background: #111329;
+      border-top: 1px solid var(--line);
+    }
+
+    .archive-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .archive-page {
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .archive-page.is-active {
+      display: grid;
+      animation: page-in 0.35s ease both;
+    }
+
+    .info-column {
+      min-height: 350px;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .info-column h3 {
+      margin: 0 0 1.25rem;
+      color: #ffffff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .info-column p,
+    .info-column li {
+      color: var(--muted);
+      line-height: 1.15;
+    }
+
+    .info-column ul {
+      padding-left: 1.2rem;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+
+    .page-button {
+      min-width: 44px;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .page-button.is-active,
+    .page-button:hover {
+      border-color: var(--violet);
+      background: var(--violet-dark);
+      color: #ffffff;
+    }
+
+    .deltarune-footer {
+      padding: 4rem 1.5rem;
+      border-top: 1px solid var(--line);
+      background: #090b16;
+      text-align: center;
+    }
+
+    .deltarune-footer h2 {
+      margin: 0 0 1rem;
+      color: #ffffff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      line-height: 1.7;
+    }
+
+    .deltarune-footer p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .panel-row,
+      .archive-page {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .archive-header {
+        display: block;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .deltarune-nav a {
+        padding: 0.55rem 0.7rem;
+        font-size: 0.55rem;
+      }
+
+      .panel-row,
+      .archive-page {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deltarune-hero">
+    <div>
+      <h1 class="deltarune-title">DELTARUNE</h1>
+      <p class="deltarune-subtitle">THE PROPHECY</p>
+    </div>
+    <a class="scroll-cue" href="#exposition">ENTER THE RECORD</a>
+  </main>
+  <nav class="deltarune-nav">
+    <ul>
+      <li><a href="#exposition">Exposition</a></li>
+      <li><a href="#archive">Archive</a></li>
+    </ul>
+  </nav>
+
+  <section class="story-section" id="exposition">
+    <div class="story-intro">
+      <p class="eyebrow">Chapter IV archive / 01</p>
+      <h2 class="section-heading">THE PROPHECY BEGINS IN DARKNESS</h2>
+      <p class="story-copy">
+        Before the worlds were divided, a legend spoke of a human, a monster,
+        and a prince from the Dark. Together, the three heroes would stand
+        against the balance-breaking power of the Dark Fountains.
+      </p>
+
+      <div class="panel-row" aria-label="Chapter 4 panel placeholders">
+        <div class="chapter-panel">
+          <img src="Recursos/Prophecy_screenshot_initial2.png" alt="Initial prophecy scene from Deltarune Chapter 4">
+          <p><span>THE DELTA RUNE</span></p>
+        </div>
+        <div class="chapter-panel">
+          <img src="Recursos/Prophecy_screenshot_main1.png" alt="Main prophecy scene from Deltarune Chapter 4">
+          <p><span>LIGHT AND DARK</span></p>
+        </div>
+        <div class="chapter-panel">
+          <img src="Recursos/Prophecy_screenshot_heroes1_2nd_Sanctuary.png" alt="The heroes in the second sanctuary from Deltarune Chapter 4">
+          <p><span>THE HEROES</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="archive-section" id="archive">
+    <div class="archive-header">
+      <div>
+        <p class="eyebrow">The field guide / 02</p>
+        <h2 class="section-heading">THE PROPHECY</h2>
+      </div>
+      <p class="story-copy">Turn the page to explore the four forces at the heart of the legend.</p>
+    </div>
+
+    <div class="archive-page is-active" data-page="1">
+      <article class="info-column">
+        <h3>THE PROPHECY</h3>
+        <p>A time will come when the balance between Light and Dark begins to break.</p>
+        <p>The legend says that three heroes will rise and seal the fountains before the world is consumed by darkness.</p>
+      </article>
+      <article class="info-column">
+        <h3>LIGHT / DARK</h3>
+        <p>The Light World is the familiar surface: a place of towns, school days, and ordinary lives.</p>
+        <p>Beyond its edges lie Dark Worlds, shaped by fountains and given form by the objects of the Light.</p>
+      </article>
+      <article class="info-column">
+        <h3>THE THREE HEROES</h3>
+        <ul>
+          <li>Kris, the human hero</li>
+          <li>Susie, the monster hero</li>
+          <li>Ralsei, the prince of darkness</li>
+        </ul>
+        <p>Their differences are part of the prophecy's strength.</p>
+      </article>
+      <article class="info-column">
+        <h3>THE ANGEL</h3>
+        <p>The Angel remains the prophecy's greatest mystery: a figure connected to the future of the world and the fate of its fountains.</p>
+        <p>Its meaning is still unfolding.</p>
+      </article>
+    </div>
+
+    <div class="archive-page" data-page="2">
+      <article class="info-column"><h3>THE FOUNTAINS</h3><p>Dark Fountains bring a new world into being. Their growing number threatens the boundary between Light and Dark.</p></article>
+      <article class="info-column"><h3>THE BALANCE</h3><p>The prophecy is not simply a battle between good and evil. It is a warning about what happens when either side overwhelms the other.</p></article>
+      <article class="info-column"><h3>THE JOURNEY</h3><p>Every Dark World reveals another part of the legend, while the heroes discover what their roles truly demand.</p></article>
+      <article class="info-column"><h3>THE UNKNOWN</h3><p>Some answers have not yet been written. The prophecy is a record of what may happen, not a map of every choice.</p></article>
+    </div>
+
+    <nav class="pagination" aria-label="Prophecy pages">
+      <button class="page-button is-active" type="button" data-page-button="1" aria-label="Page 1">1</button>
+      <button class="page-button" type="button" data-page-button="2" aria-label="Page 2">2</button>
+    </nav>
+  </section>
+
+  <footer class="deltarune-footer">
+    <h2>THE PROPHECY CONTINUES</h2>
+    <p>Will the heroes find a way to restore balance between Light and Dark? or will the world be consumed in darkness.</p>
+  </footer>
+
+  <script>
+    const pageButtons = document.querySelectorAll('[data-page-button]');
+    const pages = document.querySelectorAll('[data-page]');
+
+    pageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selectedPage = button.dataset.pageButton;
+
+        pages.forEach((page) => {
+          page.classList.toggle('is-active', page.dataset.page === selectedPage);
+        });
+
+        pageButtons.forEach((pageButton) => {
+          pageButton.classList.toggle('is-active', pageButton === button);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
