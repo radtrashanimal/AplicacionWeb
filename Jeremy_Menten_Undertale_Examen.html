@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asgore - Undertale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #000000;
+            --text-white: #ffffff;
+            --accent-white: #f0f0f0;
+            --border-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('Recursos/ezgif-2-44ae24f4445a.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-white);
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .hero-header {
+            background: url('Recursos/New_Home_location.webp');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+            border-bottom: 3px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            z-index: 1;
+        }
+
+        .hero-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-icon {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--bg-black);
+            border: 3px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            overflow: hidden;
+        }
+
+        .hero-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            color: var(--accent-white);
+            text-shadow: 3px 3px 0 #000, 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            background-color: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-white);
+            font-size: 0.8em;
+            font-family: 'Press Start 2P', monospace;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--border-color);
+            color: var(--bg-black);
+        }
+
+        .nav-btn.active {
+            background-color: var(--border-color);
+            color: var(--bg-black);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .intro-description {
+            background-color: rgba(30, 30, 30, 0.8);
+            border: 2px solid var(--border-color);
+            padding: 30px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-size: 0.6em;
+            text-align: center;
+        }
+
+        .intro-description p {
+            margin-bottom: 10px;
+        }
+
+        .intro-description .game-reference {
+            color: var(--accent-white);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #lore {
+            margin-top: 40px;
+        }
+
+        #stats {
+            margin-top: 40px;
+        }
+
+        .lore-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .lore-image {
+            text-align: center;
+        }
+
+        .lore-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .lore-text {
+            background-color: rgba(30, 30, 30, 0.8);
+            border-left: 4px solid var(--border-color);
+            padding: 25px;
+            line-height: 1.8;
+            font-size: 1em;
+        }
+
+        .lore-text h2 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .lore-text p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 0.6em;
+        }
+
+        .stats-section h2 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            background-color: rgba(30, 30, 30, 0.9);
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: bold;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-bar {
+            background-color: #000;
+            border: 2px solid var(--border-color);
+            height: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: var(--text-white);
+            font-weight: bold;
+            font-size: 1em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            transition: width 0.5s ease;
+        }
+
+        .stat-fill.health {
+            background: linear-gradient(90deg, #cc0000, #ff0000);
+        }
+
+        .stat-fill.defense {
+            background: linear-gradient(90deg, #cc8800, #ffaa00);
+        }
+
+        .stat-fill.attack {
+            background: linear-gradient(90deg, #ff3333, #cc0000);
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            text-align: center;
+            border-top: 3px solid var(--border-color);
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .lore-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2.5em;
+            }
+
+            .nav-tabs {
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-header">
+        <div class="hero-icon">
+            <img src="Recursos/Asgore_Dreemurr_face.webp" alt="Asgore Icon">
+        </div>
+        <h1 class="hero-title"> ASGORE </h1>
+        <p class="hero-subtitle">Rey de los Monstruos</p>
+    </header>
+
+    <nav class="nav-tabs">
+        <button class="nav-btn" onclick="scrollToSection('lore')">LORE</button>
+        <button class="nav-btn" onclick="scrollToSection('stats')">ESTADÍSTICAS</button>
+    </nav>
+
+    <div class="container">
+        <div class="intro-description">
+            <p>
+                Asgore Dreemurr es el Rey de los Monstruos, un personaje icónico del videojuego 
+                <span class="game-reference">Undertale (2015)</span> creado por Toby Fox. Es el antagonista principal de la historia, encargado de cumplir una misión que lo define como un monarca destinado a proteger a su pueblo, aunque a través de métodos controvertidos.
+            </p>
+        </div>
+
+        <section id="lore">
+            <div class="lore-content">
+                <div class="lore-image">
+                    <img src="Recursos/Asgore_Dreemurr.webp" alt="Asgore Dreemurr">
+                </div>
+                <div class="lore-text">
+                    <h2>Historia</h2>
+                    <p>
+                        Asgore Dreemurr es el Rey de los Monstruos y el principal antagonista de Undertale. Como monarca del reino subterráneo, lleva sobre sus hombros el peso de una decisión terrible: la promesa de matar a todo humano que caiga al Monte Ebott.
+                    </p>
+                    <p>
+                        Una vez fue un monarca compasivo, esposo de Toriel y padre del príncipe Asriel. Sin embargo, tras la muerte de su hijo a manos de humanos asustados, Asgore hizo un juramento que lo transformaría en leyenda: recolectaría seis almas humanas para romper la barrera mágica que aprisiona a su pueblo.
+                    </p>
+                    <p>
+                        A pesar de su terrible propósito, Asgore sigue siendo un ser honorable y nostálgico, recordando los días de paz. Su gran espada ardiente y su majestuosa presencia lo convierten en uno de los enemigos más icónicos del juego.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats">
+            <div class="stats-section">
+                <h2> ESTADÍSTICAS </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <span>HP</span>
+                        </div>
+                        <div style="font-size: 1.5em; margin: 15px 0; font-weight: bold;">
+                            3,500
+                        </div>
+                        <div style="font-size: 0.5em; color: var(--accent-white);">
+                            SALUD MÁXIMA
+                        </div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <span>ATK</span>
+                        </div>
+                        <div style="font-size: 1.5em; margin: 15px 0; font-weight: bold;">
+                            80
+                        </div>
+                        <div style="font-size: 0.5em; color: var(--accent-white);">
+                            ATAQUE
+                        </div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <span>DEF</span>
+                        </div>
+                        <div style="font-size: 1.5em; margin: 15px 0; font-weight: bold;">
+                            80
+                        </div>
+                        <div style="font-size: 0.5em; color: var(--accent-white);">
+                            DEFENSA
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 - Página dedicada a Asgore Dreemurr de Undertale (2015) | Toby Fox</p>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
